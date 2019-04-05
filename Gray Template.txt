@@ -1,0 +1,25 @@
+read_image(Image, 'letters')
+* threshold (Image, Regions, 1, 94)
+* connection (Regions, Connection)
+gen_rectangle1(Rectangle, 204, 288, 235, 316)
+reduce_domain(Image, Rectangle, ImageReduced)
+create_template(ImageReduced, 255, 4, 'sort', 'original', TemplateID)
+threshold(Image, Regions, 1, 94)
+connection(Regions, ConnectedRegions)
+*templateArea := a
+area_center(Rectangle,Area, Row, Column)
+
+*select_shape(ConnectedRegions, SelectedRegions, 'area', 'and', Area-100, Area+100)
+add_channels(ConnectedRegions, Image, GrayRegions)
+best_match(GrayRegions, TemplateID, 20, 'false', Row1, Column1, Error)
+
+ 
+
+   for i := 0 to |Row1| - 1 by 1
+    if (Error[i] > 0)
+        disp_circle (3600, Row1[i], Column1[i], 10.5)
+    endif
+endfor
+
+
+*best_match_mg(ImageReduced, TemplateID, 30, 'false', 4, 2, Row2, Column2, Error1)

@@ -1,0 +1,36 @@
+* read_image (Image, 'green-dot')
+* threshold (Image, Regions, 0, 119)
+* connection(Regions, ConnectedRegions)
+* select_shape(ConnectedRegions, SelectedRegions, 'area', 'and', 10000, 20000)
+* fill_up (SelectedRegions, RegionFillUp)
+* reduce_domain (Image, SelectedRegions, ImageReduced)
+* create_scaled_shape_model (ImageReduced, 5, rad(-45), rad(90), 'auto', 0.8, 1.0, 'auto', 'none', 'ignore_global_polarity', 40, 10, ModelID)
+read_image(SourceImage, 'green-dot')
+threshold(SourceImage, Region, 0, 128)
+connection(Region, ConnectedRegions1)
+select_shape(ConnectedRegions1, TheMark, 'area', 'and', 10000, 20000)
+reduce_domain(SourceImage, TheMark, TheTemplate)
+create_scaled_shape_model(TheTemplate, 'auto', rad(-45), rad(90), 'auto', 0.8, 1.2, 'auto', 'auto', 'ignore_global_polarity', 'auto', 'auto', ModelID1)
+get_shape_model_contours(Model, ModelID1, 1)
+area_center(TheMark, Area, Row, Column)
+vector_angle_to_rigid(0, 0, 0, Row, Column, 0, HomMat2D)
+affine_trans_contour_xld(Model, ModelTrans, HomMat2D)
+dev_display (SourceImage)
+dev_display (ModelTrans)
+read_image (ImageSearch, 'green-dots')
+dev_display (ImageSearch)
+find_scaled_shape_model(ImageSearch, ModelID1, rad(-45), rad(90), 0.8, 1.2, 0.3, 5, 0.5, 'least_squares', 5, 0.8, Row1, Column1, Angle, Scale, Score)
+
+for I := 0 to |Score| - 1 by 1
+    hom_mat2d_identity (HomMat2DIdentity)
+    hom_mat2d_translate (HomMat2DIdentity, Row1[I], Column1[I], HomMat2DTranslate)
+    hom_mat2d_rotate (HomMat2DTranslate, Angle[I], Row1[I], Column1[I], HomMat2DRotate)
+    hom_mat2d_scale (HomMat2DRotate, Scale[I], Scale[I], Row1[I], Column1[I], HomMat2DScale)
+    affine_trans_contour_xld (Model, ModelTrans, HomMat2DScale)
+    dev_display (ModelTrans)
+endfor
+
+
+
+
+

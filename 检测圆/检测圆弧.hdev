@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image(Image, 'C:/Users/yukii/Desktop/a.bmp')</l>
+<l>dev_set_draw('margin')</l>
+<c> </c>
+<l>get_image_size (Image, Width, Height)</l>
+<c>*准备查找</c>
+<l>create_metrology_model (MetrologyHandle)</l>
+<c>* Setting the image width in advance is not</c>
+<c>* necessary, but improves the runtime of the</c>
+<c>* first measurement.</c>
+<c>*用于加速第一次搜索</c>
+<l>set_metrology_model_image_size (MetrologyHandle, Width, Height)</l>
+<c>*设置找圆时的搜索范围</c>
+<l>add_metrology_object_circle_measure (MetrologyHandle,123.615, 120.533, 53.1163, 12, 5, 1.5, 2, [], [], MetrologyCircleIndices)</l>
+<c>* It is possible to measure more than one circle/rectangle/line/ellipse</c>
+<c>* instance per metrology object in one call.</c>
+<c>* Since we like to measure two circles per object,</c>
+<c>* we set 'num_instances' to 2.</c>
+<c>*设置找圆的运行时参数 搜索的个数（最多）</c>
+<l>set_metrology_object_param (MetrologyHandle, MetrologyCircleIndices, 'num_instances', 2)</l>
+<c>* Setting 'measure_transition' to 'uniform' assures</c>
+<c>* that only consistent circles are returned, that have</c>
+<c>* either only edges from bright to dark or vice versa.</c>
+<c>* Since the consistency check increases runtime, it is</c>
+<c>* switched of by default.</c>
+<c>* In this example however, it is safer to switch it on,</c>
+<c>* because both negative and positive edges are present.</c>
+<c>*设置找圆的运行时参数 搜索方向上的极性</c>
+<l>set_metrology_object_param (MetrologyHandle, MetrologyCircleIndices, 'measure_transition', 'uniform')</l>
+<c>* Setting the minimum score can make the results more robust</c>
+<c>*设置找圆的运行时参数 得分</c>
+<l>set_metrology_object_param (MetrologyHandle, MetrologyCircleIndices, 'min_score', .9)</l>
+<c>* </c>
+<c>* Perform the measurement</c>
+<c>* 找圆</c>
+<l>  apply_metrology_model (Image, MetrologyHandle)</l>
+<c>  *获得所有结果信息</c>
+<l>  get_metrology_object_result (MetrologyHandle, MetrologyCircleIndices, 'all', 'result_type', 'all_param', RectangleParameter)</l>
+<c>  *显示找到的圆</c>
+<l>  get_metrology_object_result_contour (Contours, MetrologyHandle, 'all', 'all', 1.5)</l>
+<c>  *显示卡尺</c>
+<l> * get_metrology_object_measures (Contour, MetrologyHandle, 'all', 'all', Row1, Column1)</l>
+<c>  *显示组成圆上的点</c>
+<l>  *gen_cross_contour_xld (Cross, Row1, Column1, 6, 0.785398)</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

@@ -1,0 +1,1 @@
+create_scaled_shape_model(TheTemplate, 'auto', rad(-45), rad(90), 'auto', 0.8, 1.2, 'auto', 'auto', 'ignore_global_polarity', 'auto', 'auto', ModelID1)

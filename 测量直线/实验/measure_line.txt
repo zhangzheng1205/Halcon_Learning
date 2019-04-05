@@ -1,0 +1,21 @@
+read_image(Image, 'C:/Users/yukii/Desktop/a.bmp')
+get_image_size(Image, Width, Height)
+*draw_rectangle1(3600, Row1, Column1, Row2, Column2)
+Row1:=89 
+Column1:=300.921 
+Row2:=104.529 
+Column2 := 586.395
+Phi := 0 
+LenWidth := Column2 -Column1
+LenHeight := Row2 -Row1
+core_X := Column1 + LenWidth/2 
+core_Y := Row1 + LenHeight/2
+dev_set_draw('margin')
+dev_set_color('green')
+dev_set_line_width(2)
+gen_rectangle2(Rectangle, core_Y,core_X , Phi, LenWidth, LenHeight)
+gen_measure_rectangle2(core_Y, core_X, Phi, LenWidth,LenHeight, Width, Height, 'nearest_neighbor', MeasureHandle)
+measure_pairs(Image, MeasureHandle, 1, 30, 'all', 'all', RowEdgeFirst, ColumnEdgeFirst, AmplitudeFirst, RowEdgeSecond, ColumnEdgeSecond, AmplitudeSecond, IntraDistance, InterDistance)
+disp_line(3600, RowEdgeFirst, ColumnEdgeFirst, RowEdgeSecond, ColumnEdgeSecond)
+disp_message(3600,|IntraDistance| , 'window', 10,10, 'blue', 'true')
+dev_set_color('red')

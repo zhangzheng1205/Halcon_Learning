@@ -1,0 +1,22 @@
+read_image (Image, 'ic_pin')
+get_image_size(Image, Width, Height)
+*draw_rectangle1(3600, Row1, Column1, Row2, Column2)
+ 
+Row := 47
+Column := 485
+Phi := 0
+Length1 := 420
+Length2 := 10
+measure_rect_width := 420
+measure_rect_Height := 10
+dev_set_color ('green')
+dev_set_draw ('margin')
+dev_set_line_width (3)
+gen_rectangle2(Rectangle, Row, Column, 0, Length1, Length2)
+gen_measure_rectangle2(Row, Column, 0, Length1, Length2, Width, Height, 'nearest_neighbor', MeasureHandle)
+measure_pairs (Image, MeasureHandle, 1.5, 30, 'negative', 'all', RowEdgeFirst, ColumnEdgeFirst, AmplitudeFirst, RowEdgeSecond, ColumnEdgeSecond, AmplitudeSecond, PinWidth, PinDistance)
+dev_set_color('red')
+disp_line (3600, RowEdgeFirst, ColumnEdgeFirst, RowEdgeSecond, ColumnEdgeSecond)
+numPins := |ColumnEdgeFirst|
+avgPinWidth := sum(PinWidth) / |PinWidth|
+avgPinDistance := sum(PinDistance) / |PinDistance|

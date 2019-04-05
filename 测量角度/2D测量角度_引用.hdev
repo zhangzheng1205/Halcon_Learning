@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>*read_image (Image, 'C:/Users/yukii/Desktop/diamond_01.png')</l>
+<l>read_image (Image, 'diamond/diamond_02.png')</l>
+<l>* gen_region_line (ROI_0, 293.5, 222.433, 182.5, 360.033)</l>
+<l>* gen_region_line (ROI_0, 160.75, 414.073, 265.5, 551.791)</l>
+<l>get_image_size(Image, Width, Height)</l>
+<l>create_metrology_model(MetrologyHandle)</l>
+<c></c>
+<c></c>
+<c></c>
+<l>set_metrology_model_image_size (MetrologyHandle, Width, Height)</l>
+<l>add_metrology_object_line_measure (MetrologyHandle, 293.5, 222.433, 182.5, 360.033, 20, 5, 1, 30, [], [], Index)</l>
+<l>add_metrology_object_line_measure (MetrologyHandle, 160.75, 414.073, 265.5, 551.791, 20, 5, 1, 30, [], [], Index2)</l>
+<c> </c>
+<c></c>
+<l>apply_metrology_model (Image, MetrologyHandle)</l>
+<l>get_metrology_object_measures (Contours, MetrologyHandle, 'all', 'all', Row, Column)</l>
+<l>get_metrology_object_result_contour (Contour, MetrologyHandle, 'all', 'all', 1.5)</l>
+<l>get_metrology_object_result(MetrologyHandle, 'all', 'all', 'result_type', 'all_param', LinePoints)</l>
+<l>angle_ll(LinePoints[0], LinePoints[1], LinePoints[2], LinePoints[3], LinePoints[4], LinePoints[5], LinePoints[6], LinePoints[7], Angle)</l>
+<l>Angle :=  deg(Angle) +180 </l>
+<l>* gen_circle_contour_xld(ContCircle, Row, Column, 100, 0, 6.28318, 'positive', 1)</l>
+<l>dev_set_color('red')</l>
+<l>set_font(3600, '-微软雅黑-50-*-*-*-*-1-')</l>
+<l>write_string(3600, 'NG')</l>
+<l>set_font(3600, '-微软雅黑-20-*-*-*-*-1-')</l>
+<l>new_line(3600)</l>
+<l>new_line(3600)</l>
+<l>new_line(3600)</l>
+<l>write_string(3600, Angle)</l>
+<l>new_line(3600)</l>
+<l>write_string(3600, Angle)</l>
+<c>             </c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

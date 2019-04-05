@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Zeiss1, 'zeiss1')</l>
+<l>get_image_size (Zeiss1, Width, Height)</l>
+<l>Row := 275</l>
+<l>Column := 335</l>
+<l>Radius := 107</l>
+<l>AngleStart := -rad(55)</l>
+<l>AngleExtent := rad(170)</l>
+<l>dev_set_draw ('fill')</l>
+<l>dev_set_color ('green')</l>
+<l>dev_set_line_width (1)</l>
+<l>get_points_ellipse (AngleStart + AngleExtent, Row, Column, 0, Radius, Radius, RowPoint, ColPoint)</l>
+<l>disp_arc (3600, Row, Column, AngleExtent, RowPoint, ColPoint)</l>
+<l>dev_set_line_width (3)</l>
+<l>gen_measure_arc (Row, Column, Radius, AngleStart, AngleExtent, 10, Width, Height, 'nearest_neighbor', MeasureHandle)</l>
+<l>disp_continue_message (3600, 'black', 'true')</l>
+<l> measure_pos (Zeiss1, MeasureHandle, 1, 10, 'all', 'all', RowEdge, ColumnEdge, Amplitude, Distance)</l>
+<l>distance_pp (RowEdge[1], ColumnEdge[1], RowEdge[2], ColumnEdge[2], IntermedDist)</l>
+<c> </c>
+<l>dev_set_color ('red')</l>
+<l>* disp_circle (WindowHandle, RowEdge, ColumnEdge, RowEdge - RowEdge + 1)</l>
+<l>disp_line (3600, RowEdge[1], ColumnEdge[1], RowEdge[2], ColumnEdge[2])</l>
+<l>dev_set_color ('yellow')</l>
+<l>disp_message (3600, 'Distance: ' + IntermedDist, 'image', 250, 80, 'yellow', 'false')</l>
+<l>* dump_window (WindowHandle, 'tiff_rgb', 'C:\\Temp\\zeiss_result')</l>
+<l>close_measure (MeasureHandle)</l>
+<l>dev_set_line_width (1)</l>
+<l>* disp_continue_message (WindowHandle, 'black', 'true')</l>
+<c>                    </c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

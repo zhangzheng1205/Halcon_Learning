@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.1" halcon_version="12.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image, 'C:/Users/yukii/Desktop/lines.bmp')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>create_metrology_model (MetrologyHandle)</l>
+<c></c>
+<l>set_metrology_model_image_size (MetrologyHandle, Width, Height)</l>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_color('red')</l>
+<l>*gen_rectangle1(Rectangle, 93, 179, 98, 570)</l>
+<l> *add_metrology_object_line_measure (MetrologyHandle, 95,182, 97, 562, 40, 5 , 1, 30, ['measure_transition','min_score'], ['negative',0.5], Index)</l>
+<l> *add_metrology_object_line_measure (MetrologyHandle, 98, 177, 87, 573, 20, 5, 1, 30, [], [], Index1)</l>
+<l>   add_metrology_object_line_measure (MetrologyHandle,  95,182, 97, 562, 20, 5, 1, 30, [], [], Index1)</l>
+<l>  * add_metrology_object_line_measure (MetrologyHandle,  93, 189, 98, 570, 20, 5, 1, 30, 'measure_transition', 'negative', Index1)</l>
+<c></c>
+<c></c>
+<l>apply_metrology_model (Image, MetrologyHandle)</l>
+<l>dev_set_draw ('margin')</l>
+<l>dev_set_color('green')</l>
+<l>get_metrology_object_measures (MeasureContours, MetrologyHandle, 'all', 'all', Row, Column)</l>
+<l>dev_set_color('yellow')</l>
+<l>get_metrology_object_result_contour (Contour, MetrologyHandle, 'all', 'all', 1.5)</l>
+<c></c>
+<l> len := 563 -185</l>
+<l>get_metrology_object_result (MetrologyHandle, 'all', 'all', 'result_type', 'all_param', LineResultPoints)</l>
+<c>*Get Rad Angle</c>
+<l>line_orientation(LineResultPoints[0],LineResultPoints[1], LineResultPoints[2], LineResultPoints[3], Phi)</l>
+<c>*Get Distance</c>
+<l>distance_pp(LineResultPoints[0],LineResultPoints[1], LineResultPoints[2], LineResultPoints[3], Distance)</l>
+<l>Angle := deg(Phi)</l>
+<c></c>
+<l>if (  Angle  &lt;-0.01)</l>
+<l>    Angle := 0 </l>
+<l>endif</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
